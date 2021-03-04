@@ -10,8 +10,19 @@
     <title>Twitter Sentiment Analysis!</title>
   </head>
 
-  <body style="background: #3AAFA9;">
-    <h1> Twitter Sentiment Analysis</h1>
+  <body style="background: #29465b;">
+
+    <center> 
+      <h1 class="mt-5 mt-5 text-white"> Twitter Sentiment Analysis</h1> <br/><br/>
+      <form class="container mt-5 mt-5" action="{{ url_for('predict')}}" method="post">
+        <div class="form-group col-sm-8">
+          <h3 class="text-white">Enter Tweet To Classify The Sentiment of The Tweet</h3> <br/>
+          <input type="text" class="form-control" id="tweet" placeholder="Enter Tweet"/> <br/><br/>
+          <button type="submit" class='btn btn-success'>Analyse Sentiment </button>
+        </div>
+      </form>
+    </center>
+  </body>
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
