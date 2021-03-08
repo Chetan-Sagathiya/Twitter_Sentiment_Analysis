@@ -1,7 +1,26 @@
 from flask import Flask, render_template, request
-import sentiment_analysis
+import spacy
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+import pickle
+
+import en_core_web_sm
+nlp = en_core_web_sm.load()
+
+import re
+import nltk
+from nltk.corpus import stopwords
+from nltk.stem import WordNetLemmatizer
+# nltk.download('punkt')
+# nltk.download('stopwords')
+# nltk.download('wordnet')
+
 
 app = Flask(__name__)
+
+#model = pickle.load(open("gaussian_nb.pkl", "rb"))
 
 @app.route('/')
 def home():
@@ -12,5 +31,28 @@ def predict():
 	sentiment = ''
 	if request.method == 'POST':
 		tweet = request.form['tweet']
-		tweet = sentiment_analysis.clean_tweets(tweet)
-		return render_template('result.html', sentiment = tweet)
+		tweet = str(clean_tweets(tweet))
+		print(" *************************************** ", tweet)
+		vec = nlp(tweet).vector
+		#vec = vec.reshape(-1, 1)
+		print("**************", vec, vec.shape, type(vec))
+		#result = model.predict(vec)
+		#print(result)
+		return render_template('result.html',)
+
+
+wordnet = WordNetLemmatizer()
+def clean_tweets(tweet):
+	tempArr = []
+	tweet = re.sub(r"[^a-zA-Z]+", ' ', tweet)
+	tweet = tweet.lower()
+	tweet = tweet.split()
+	tweet = [wordnet.lemmatize(word) for word in tweet if not word in set(stopwords.words('english'))]
+	if len(tweet) == 0:
+	  # if all the words im tweet are stopwords then
+	  tweet = 'I'
+	else:
+	  tweet = ' '.join(tweet)
+	tweet
+	tempArr.append(tweet)
+	return tempArr
