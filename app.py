@@ -2,8 +2,6 @@ from flask import Flask, render_template, request
 import spacy
 import pandas as pd
 import numpy as np
-import matplotlib.pyplot as plt
-import seaborn as sns
 import pickle
 
 import en_core_web_sm
@@ -13,14 +11,14 @@ import re
 import nltk
 from nltk.corpus import stopwords
 from nltk.stem import WordNetLemmatizer
-# nltk.download('punkt')
-# nltk.download('stopwords')
-# nltk.download('wordnet')
+nltk.download('punkt')
+nltk.download('stopwords')
+nltk.download('wordnet')
 
 
 app = Flask(__name__)
 
-#model = pickle.load(open("gaussian_nb.pkl", "rb"))
+model = pickle.load(open("random_forest.pkl", "rb"))
 
 @app.route('/')
 def home():
@@ -34,10 +32,10 @@ def predict():
 		tweet = str(clean_tweets(tweet))
 		print(" *************************************** ", tweet)
 		vec = nlp(tweet).vector
-		#vec = vec.reshape(-1, 1)
+		vec = vec.reshape(1, -1)
 		print("**************", vec, vec.shape, type(vec))
-		#result = model.predict(vec)
-		#print(result)
+		result = model.predict(vec)
+		print("result is", result)
 		return render_template('result.html',)
 
 
