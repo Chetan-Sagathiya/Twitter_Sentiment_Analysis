@@ -18,7 +18,7 @@ nltk.download('wordnet')
 
 app = Flask(__name__)
 
-model = pickle.load(open("random_forest.pkl", "rb"))
+model = pickle.load(open("random_forest2.pkl", "rb"))
 
 @app.route('/')
 def home():
@@ -29,14 +29,15 @@ def predict():
 	sentiment = ''
 	if request.method == 'POST':
 		tweet = request.form['tweet']
-		tweet = str(clean_tweets(tweet))
-		print(" *************************************** ", tweet)
+		tweet = clean_tweets(tweet)
+		tweet = ' '.join(tweet)
+		print(" *************************************** tweet is ", tweet)
 		vec = nlp(tweet).vector
 		vec = vec.reshape(1, -1)
 		print("**************", vec, vec.shape, type(vec))
 		result = model.predict(vec)
-		print("result is", result)
-		return render_template('result.html',)
+		print("result is", model.predict(vec))
+		return render_template('result.html', sentiment=result)
 
 
 wordnet = WordNetLemmatizer()
