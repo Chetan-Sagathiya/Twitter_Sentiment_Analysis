@@ -12,8 +12,17 @@
 
    <body style="background: #29465b;">
 
-    <h1 class="mt-5 mt-5 text-white"> Twitter Sentiment Analysis</h1>  
-    {{sentiment}}
+    <h1 class="mt-5 mt-5 text-white"> Twitter Sentiment Analysis</h1> 
+    <center>
+      {% if sentiment == 1 %}
+          <h3 class="text-white"> Sentiment of the tweet is Negative </h3>
+      {% else %}
+          <h3 class="text-white"> Sentiment of the tweet is Positive </h3>
+      {% endif %}
+      <br/> <br/> <br/>
+      <a href="/" class="btn btn-success">Home</a>
+    </center> 
+
     <!-- Optional JavaScript -->
     <!-- jQuery first, then Popper.js, then Bootstrap JS -->
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
