@@ -1,11 +1,7 @@
 from flask import Flask, render_template, request
-import spacy
 import pandas as pd
 import numpy as np
 import pickle
-
-import en_core_web_sm
-nlp = en_core_web_sm.load()
 
 import re
 import nltk
@@ -18,7 +14,8 @@ nltk.download('wordnet')
 
 app = Flask(__name__)
 
-model = pickle.load(open("random_forest2.pkl", "rb"))
+model = pickle.load(open("random_forest.pkl", "rb"))
+vectorizer = pickle.load(open("tfidfconverter.pkl", "rb"))
 
 @app.route('/')
 def home():
@@ -31,12 +28,8 @@ def predict():
 		tweet = request.form['tweet']
 		tweet = clean_tweets(tweet)
 		tweet = ' '.join(tweet)
-		print(" *************************************** tweet is ", tweet)
-		vec = nlp(tweet).vector
-		vec = vec.reshape(1, -1)
-		print("**************", vec, vec.shape, type(vec))
-		result = model.predict(vec)
-		print("result is", model.predict(vec))
+		matrix = vectorizer.transform([tweet])
+		result = model.predict(matrix)
 		return render_template('result.html', sentiment=result)
 
 
